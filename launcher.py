@@ -4,6 +4,7 @@ from pygame.locals import *
 
 from classes import *
 from constantes import *
+from game import *
 
 pygame.init()
 
