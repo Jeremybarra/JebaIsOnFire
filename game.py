@@ -69,8 +69,9 @@ class PlayingState(GameState):
 		self.level.generer()
 		self.currentPlayer = 0
 		self.units = {}
-		self.units[(1, 1)] = Myrmidon(1, 1, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None)
-		self.units[(16, 13)] = Myrmidon(16, 13, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None)
+		self.units[(1, 1)] = Myrmidon(1, 1, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
+		self.units[(8, 7)] = Myrmidon(8, 7, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
+		self.units[(16, 13)] = Myrmidon(16, 13, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 1)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
@@ -80,11 +81,15 @@ class PlayingState(GameState):
 				game.state = TitleScreenState()
 			elif event.type == KEYDOWN and event.key == K_e:
 				self.currentPlayer = (self.currentPlayer + 1) % player_number
+				for key in self.units:
+					self.units[key].masquerMouvementsPossibles()
+
 			elif event.type == MOUSEBUTTONDOWN:
 				pos = pygame.mouse.get_pos()
 				case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
 				if case_pos in self.units:
-					print(type(self.units[case_pos]))
+					if self.units[case_pos].proprietaire == self.currentPlayer:
+						self.units[case_pos].afficherMouvementsPossibles(self.level)
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()

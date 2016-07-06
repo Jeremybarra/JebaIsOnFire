@@ -4,11 +4,6 @@
 #Paramètres de la fenêtre
 sprite_width = 50
 sprite_height = 50
-nombre_sprite_cote = 18
-nombre_ligne = 15
-taille_sprite = 50
-longueur_fenetre = nombre_sprite_cote * taille_sprite
-hauteur_fenetre = nombre_ligne * taille_sprite
 
 #Personnalisation de la fenêtre
 titre_fenetre = "Fire Emblem"
@@ -22,6 +17,7 @@ image_fond = "Images/accueil.png"
 image_plaine = "Images/plaine.PNG"
 image_foret ="Images/foret.PNG"
 image_fort ="Images/fort.PNG"
+image_mouvements_possibles = "Images/case_accessible.png"
 
-#Constantes liées au jeu
+#Constantes liées à la partie
 player_number = 2
