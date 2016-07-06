@@ -22,3 +22,6 @@ image_fond = "Images/accueil.png"
 image_plaine = "Images/plaine.PNG"
 image_foret ="Images/foret.PNG"
 image_fort ="Images/fort.PNG"
+
+#Constantes liées au jeu
+player_number = 2
