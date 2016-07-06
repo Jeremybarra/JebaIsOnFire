@@ -6,7 +6,7 @@ from pygame.locals import *
 from constantes import *
 
 class Personnage:
-	"""Classe permettant de créer un myrmidon"""
+	"""Classe permettant de créer un personnage"""
 	def __init__(self, pos_x, pos_y, droite, gauche, haut, bas, niveau, deplacement):
 		#Sprites du personnage
 		self.droite = pygame.image.load(droite).convert_alpha()
@@ -14,10 +14,8 @@ class Personnage:
 		self.haut = pygame.image.load(haut).convert_alpha()
 		self.bas = pygame.image.load(bas).convert_alpha()
 		#Position du personnage en cases et en pixels
-		self.case_x = 0
-		self.case_y = 0
-		self.x = pos_x
-		self.y = pos_y
+		self.case_x = pos_x
+		self.case_y = pos_x
 		#Direction par défaut
 		self.direction = self.droite
 		#Niveau dans lequel le personnage se trouve
@@ -75,10 +73,8 @@ class Myrmidon(Personnage):
 		self.haut = pygame.image.load(haut).convert_alpha()
 		self.bas = pygame.image.load(bas).convert_alpha()
 		#Position du personnage en cases et en pixels
-		self.case_x = 0
-		self.case_y = 0
-		self.x = pos_x
-		self.y = pos_y
+		self.case_x = pos_x
+		self.case_y = pos_y
 		#Direction par défaut
 		self.direction = self.droite
 		#Niveau dans lequel le personnage se trouve
