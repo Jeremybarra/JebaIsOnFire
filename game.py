@@ -76,7 +76,6 @@ class PlayingState(GameState):
 				game.state = TitleScreenState()
 			elif event.type == KEYDOWN and event.key == K_e:
 				self.currentPlayer = (self.currentPlayer + 1) % player_number
-				print(self.currentPlayer)
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()
