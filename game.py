@@ -93,7 +93,7 @@ class PlayingState(GameState):
 	def render(self, game):
 		self.level.afficher(game.window)
 		for key in self.units:
-			game.window.blit(self.units[key].direction, (key[0] * sprite_width, key[1] * sprite_height))
+			self.units[key].afficher(game.window)
 		game.window.blit(self.cursor.image, (self.cursor.x, self.cursor.y))
 
 class Curseur:

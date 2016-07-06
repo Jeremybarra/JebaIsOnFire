@@ -7,7 +7,7 @@ from constantes import *
 
 class Personnage:
 	"""Classe permettant de créer un personnage"""
-	def __init__(self, pos_x, pos_y, droite, gauche, haut, bas, niveau, deplacement):
+	def __init__(self, pos_x, pos_y, droite, gauche, haut, bas, niveau, deplacement, proprietaire):
 		#Sprites du personnage
 		self.droite = pygame.image.load(droite).convert_alpha()
 		self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -22,6 +22,10 @@ class Personnage:
 		self.niveau = niveau
 		self.deplacement = deplacement
 
+		if proprietaire >= 0 and proprietaire < player_number:
+			self.proprietaire = proprietaire
+		else:
+			self.proprietaire = 0
 
 	def deplacer(self, direction):
 		"""Methode permettant de déplacer le personnage"""
@@ -63,6 +67,9 @@ class Personnage:
 					self.case_y -= 1
 					self.y = self.case_y * taille_sprite
 			self.direction = self.haut
+
+	def afficher(self, fenetre):
+		fenetre.blit(self.direction, (self.case_x * sprite_width, self.case_y * sprite_height))
 
 class Myrmidon(Personnage):
 	"""Classe permettant de créer un myrmidon"""
