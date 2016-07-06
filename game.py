@@ -66,6 +66,7 @@ class PlayingState(GameState):
 		self.cursor = Curseur(image_curseur)
 		self.level = Niveau('Maps/n1')
 		self.level.generer()
+		self.currentPlayer = 0
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
@@ -73,6 +74,9 @@ class PlayingState(GameState):
 				game.continuer = False
 			elif event.type == KEYDOWN and event.key == K_ESCAPE:
 				game.state = TitleScreenState()
+			elif event.type == KEYDOWN and event.key == K_e:
+				self.currentPlayer = (self.currentPlayer + 1) % player_number
+				print(self.currentPlayer)
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()
