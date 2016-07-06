@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from constantes import *
 from classes import *
+from personnages import *
 
 class Game:
 	def __init__(self, map_width, map_height):
@@ -67,6 +68,9 @@ class PlayingState(GameState):
 		self.level = Niveau('Maps/n1')
 		self.level.generer()
 		self.currentPlayer = 0
+		self.units = {}
+		self.units[(1, 1)] = Myrmidon(1, 1, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None)
+		self.units[(16, 13)] = Myrmidon(16, 13, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
@@ -83,6 +87,8 @@ class PlayingState(GameState):
 
 	def render(self, game):
 		self.level.afficher(game.window)
+		for key in self.units:
+			game.window.blit(self.units[key].direction, (key[0] * sprite_width, key[1] * sprite_height))
 		game.window.blit(self.cursor.image, (self.cursor.x, self.cursor.y))
 
 class Curseur:
