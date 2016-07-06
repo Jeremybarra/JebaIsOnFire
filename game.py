@@ -80,11 +80,11 @@ class PlayingState(GameState):
 				game.state = TitleScreenState()
 			elif event.type == KEYDOWN and event.key == K_e:
 				self.currentPlayer = (self.currentPlayer + 1) % player_number
-		if pygame.mouse.get_pressed()[0]:
-			pos = pygame.mouse.get_pos()
-			case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
-			if case_pos in self.units:
-				print(type(self.units[case_pos]))
+			elif event.type == MOUSEBUTTONDOWN:
+				pos = pygame.mouse.get_pos()
+				case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
+				if case_pos in self.units:
+					print(type(self.units[case_pos]))
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()
