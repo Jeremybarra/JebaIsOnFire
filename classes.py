@@ -52,8 +52,8 @@ class Niveau:
 			num_case = 0
 			for sprite in ligne:
 				#On calcule la position réelle en pixels
-				x = num_case * taille_sprite
-				y = num_ligne * taille_sprite
+				x = num_case * sprite_width
+				y = num_ligne * sprite_height
 				if sprite == 'p':
 					fenetre.blit(plaine, (x,y))
 				elif sprite == 'f':
