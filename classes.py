@@ -14,7 +14,8 @@ class Niveau:
 	def __init__(self, fichier):
 		self.fichier = fichier
 		self.structure = 0
-
+		self.width = 0
+		self.height = 0
 
 	def generer(self):
 		"""Méthode permettant de générer le niveau en fonction du fichier.
@@ -24,6 +25,8 @@ class Niveau:
 			structure_niveau = []
 			#On parcourt les lignes du fichier
 			for ligne in fichier:
+				self.height += 1
+				self.width = len(ligne)
 				ligne_niveau = []
 				#On parcourt les sprites (lettres) contenus dans le fichier
 				for sprite in ligne:
