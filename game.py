@@ -9,7 +9,6 @@ from personnages import *
 class Game:
 	def __init__(self, map_width, map_height):
 		self.map = Map(map_width, map_height)
-
 		# Initialisation (pygame, fenetre etc..)
 		self.window = pygame.display.set_mode((map_width * sprite_width, map_height * sprite_height), RESIZABLE)
 		icone = pygame.image.load(image_icone)
@@ -43,18 +42,61 @@ class GameState:
 		pass
 	def render(self, game):
 		pass
-		
+
 class TitleScreenState(GameState):
 	def __init__(self):
 		self.background = pygame.image.load(image_accueil).convert()
+		self.font = pygame.font.SysFont('Arial', 25)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
-			if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-				game.continuer = False
+			mouse = pygame.mouse.get_pos()
+			self.manage_main_buttons_colors(mouse)
+			self.manage_main_buttons_texts()
 
-			elif event.type == KEYDOWN and event.key == K_F1:
-				game.state = PlayingState()
+			if event.type == QUIT:
+				game.continuer = False
+			elif event.type == pygame.MOUSEBUTTONDOWN:
+				if event.button == 1:
+					self.from_menu_to_somewhere(mouse, game)
+
+	def from_menu_to_somewhere(self, mouse, game):
+		if self.mouse_on_start_button(mouse):
+			game.state = PlayingState()
+		elif self.mouse_on_leave_button(mouse):
+			game.continuer = False
+
+	def manage_main_buttons_colors(self, mouse):
+		if self.mouse_on_start_button(mouse):
+			pygame.draw.rect(self.background, start_game_button_color_highlight, start_game_button_features)
+		else:
+			pygame.draw.rect(self.background, start_game_button_color, start_game_button_features)
+
+		if self.mouse_on_leave_button(mouse):
+			pygame.draw.rect(self.background, leave_game_button_color_highlight, leave_game_button_features)
+		else:
+			pygame.draw.rect(self.background, leave_game_button_color, leave_game_button_features)
+
+	def manage_main_buttons_texts(self):
+		launch_game_text = self.font.render('Lancer', True, black_color)
+		launch_game_text_rect = launch_game_text.get_rect()
+		launch_game_text_rect.center = (start_game_button_x + (start_game_button_witdh / 2),start_game_button_y + (start_game_button_height / 2))
+		self.background.blit(launch_game_text, launch_game_text_rect)
+
+		leave_game_text = self.font.render('Quitter', True, black_color)
+		leave_game_text_rect = leave_game_text.get_rect()
+		leave_game_text_rect.center = (leave_game_button_x + (leave_game_button_witdh / 2), leave_game_button_y + (leave_game_button_height / 2))
+		self.background.blit(leave_game_text, leave_game_text_rect)
+
+	def mouse_on_start_button(self, mouse):
+		if start_game_button_x + start_game_button_witdh > mouse[0] > start_game_button_x and start_game_button_y + start_game_button_height > mouse[1] > start_game_button_y:
+			return True
+		return False
+
+	def mouse_on_leave_button(self, mouse):
+		if leave_game_button_x + leave_game_button_witdh > mouse[0] > leave_game_button_x and leave_game_button_y + leave_game_button_height > mouse[1] > leave_game_button_y:
+			return True
+		return False
 
 	def update(self, game):
 		pass
