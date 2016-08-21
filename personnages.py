@@ -9,45 +9,45 @@ from math import *
 def distanceCases(case1, case2):
 	return sqrt((case2[0] - case1[0])**2 + (case2[1] - case1[1])**2)
 
-class Personnage:
+class Character:
 	"""Classe permettant de créer un personnage"""
-	def __init__(self, pos_x, pos_y, droite, gauche, haut, bas, niveau, deplacement, proprietaire):
+	def __init__(self, pos_x, pos_y, right, left, forward, backward, niveau, deplacement, owner):
 		#Sprites du personnage
-		self.droite = pygame.image.load(droite).convert_alpha()
-		self.gauche = pygame.image.load(gauche).convert_alpha()
-		self.haut = pygame.image.load(haut).convert_alpha()
-		self.bas = pygame.image.load(bas).convert_alpha()
+		self.right = pygame.image.load(right).convert_alpha()
+		self.left = pygame.image.load(left).convert_alpha()
+		self.forward = pygame.image.load(forward).convert_alpha()
+		self.backward = pygame.image.load(backward).convert_alpha()
 		#Position du personnage en cases et en pixels
 		self.case_x = pos_x
 		self.case_y = pos_x
 		#Direction par défaut
-		self.direction = self.droite
+		self.direction = self.right
 		#Niveau dans lequel le personnage se trouve
 		self.niveau = niveau
 		self.deplacement = deplacement
 
-		if proprietaire >= 0 and proprietaire < player_number:
-			self.proprietaire = proprietaire
+		if owner >= 0 and owner < player_number:
+			self.owner = owner
 		else:
-			self.proprietaire = 0
+			self.owner = 0
 		self.mouvement_possibles = {}
 		self.img_mouvement_possibles = pygame.image.load(image_mouvements_possibles).convert_alpha()
 
-	def afficherMouvementsPossibles(self, niveau):
+	def displayPossibleMovement(self, niveau):
 		for x in range(0, niveau.width):
 			for y in range(0, niveau.height):
 				if distanceCases((x, y), (self.case_x, self.case_y)) <= self.deplacement:
 					self.mouvement_possibles[(x, y)] = True
 
-	def masquerMouvementsPossibles(self):
+	def maskPossibleMovement(self):
 		for key in self.mouvement_possibles:
 			self.mouvement_possibles[key] = False
 
-	def deplacer(self, direction):
+	def move(self, direction):
 		"""Methode permettant de déplacer le personnage"""
 
 		#Déplacement vers la droite
-		if direction == 'droite':
+		if direction == 'right':
 			#Pour ne pas dépasser l'écran
 			if self.case_x < (nombre_sprite_cote - 1):
 				#On vérifie que la case de destination n'est pas un mur
@@ -57,59 +57,59 @@ class Personnage:
 					#Calcul de la position "réelle" en pixel
 					self.x = self.case_x * taille_sprite
 			#Image dans la bonne direction
-			self.direction = self.droite
+			self.direction = self.right
 
 		#Déplacement vers la gauche
-		if direction == 'gauche':
+		if direction == 'left':
 			if self.case_x > 0:
 				if self.niveau.structure[self.case_y][self.case_x-1] != 'm':
 					self.case_x -= 1
 					self.x = self.case_x * taille_sprite
-			self.direction = self.gauche
+			self.direction = self.left
 
 
 		#Déplacement vers le bas
-		if direction == 'bas':
+		if direction == 'backward':
 			if self.case_y < (nombre_ligne - 1):
 				if self.niveau.structure[self.case_y+1][self.case_x] != 'm':
 					self.case_y += 1
 					self.y = self.case_y * taille_sprite
-			self.direction = self.bas
+			self.direction = self.backward
 
 		#Déplacement vers le haut
-		if direction == 'haut':
+		if direction == 'forward':
 			if self.case_y > 0:
 				if self.niveau.structure[self.case_y-1][self.case_x] != 'm':
 					self.case_y -= 1
 					self.y = self.case_y * taille_sprite
-			self.direction = self.haut
+			self.direction = self.forward
 
-	def afficher(self, fenetre):
+	def display(self, fenetre):
 		for key in self.mouvement_possibles:
 			if self.mouvement_possibles[key]:
 				fenetre.blit(self.img_mouvement_possibles, (key[0] * sprite_width, key[1] * sprite_height))
 		fenetre.blit(self.direction, (self.case_x * sprite_width, self.case_y * sprite_height))
 
-class Myrmidon(Personnage):
+class Myrmidon(Character):
 	"""Classe permettant de créer un myrmidon"""
-	def __init__(self, pos_x, pos_y, droite, gauche, haut, bas, niveau, proprietaire):
+	def __init__(self, pos_x, pos_y, right, left, forward, backward, niveau, owner):
 		#Sprites du personnage
-		self.droite = pygame.image.load(droite).convert_alpha()
-		self.gauche = pygame.image.load(gauche).convert_alpha()
-		self.haut = pygame.image.load(haut).convert_alpha()
-		self.bas = pygame.image.load(bas).convert_alpha()
+		self.right = pygame.image.load(right).convert_alpha()
+		self.left = pygame.image.load(left).convert_alpha()
+		self.forward = pygame.image.load(forward).convert_alpha()
+		self.backward = pygame.image.load(backward).convert_alpha()
 		#Position du personnage en cases et en pixels
 		self.case_x = pos_x
-		self.case_y = pos_y
+		self.case_y = pos_x
 		#Direction par défaut
-		self.direction = self.droite
+		self.direction = self.right
 		#Niveau dans lequel le personnage se trouve
 		self.niveau = niveau
 		self.deplacement = 5.0
 
-		if proprietaire >= 0 and proprietaire < player_number:
-			self.proprietaire = proprietaire
+		if owner >= 0 and owner < player_number:
+			self.owner = owner
 		else:
-			self.proprietaire = 0
+			self.owner = 0
 		self.mouvement_possibles = {}
 		self.img_mouvement_possibles = pygame.image.load(image_mouvements_possibles).convert_alpha()
