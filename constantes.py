@@ -17,7 +17,7 @@ image_fond = "Images/accueil.png"
 image_plaine = "Images/plaine.PNG"
 image_foret ="Images/foret.PNG"
 image_fort ="Images/fort.PNG"
-image_mouvements_possibles = "Images/case_accessible.png"
+image_mouvements_possibles = "Images/case_accessible2.png"
 
 #Constantes liées à la partie
 player_number = 2
