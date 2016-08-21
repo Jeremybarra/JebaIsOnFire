@@ -24,7 +24,7 @@ class Game:
 	def run(self):
 		self.continuer = True
 		while(self.continuer):
-			pygame.time.Clock().tick(60)
+			pygame.time.Clock().tick(30)
 
 			self.state.handleInput(self)
 			self.state.update(self)
@@ -43,7 +43,7 @@ class GameState:
 		pass
 	def render(self, game):
 		pass
-
+		
 class TitleScreenState(GameState):
 	def __init__(self):
 		self.background = pygame.image.load(image_accueil).convert()
@@ -70,8 +70,8 @@ class PlayingState(GameState):
 		self.currentPlayer = 0
 		self.units = {}
 		self.units[(1, 1)] = Myrmidon(1, 1, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
-		self.units[(8, 7)] = Myrmidon(8, 7, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
-		self.units[(16, 13)] = Myrmidon(16, 13, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 1)
+		self.units[(8, 8)] = Myrmidon(8, 8, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
+		self.units[(12, 12)] = Myrmidon(12, 12, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 1)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
@@ -82,23 +82,25 @@ class PlayingState(GameState):
 			elif event.type == KEYDOWN and event.key == K_e:
 				self.currentPlayer = (self.currentPlayer + 1) % player_number
 				for key in self.units:
-					self.units[key].masquerMouvementsPossibles()
+					self.units[key].maskPossibleMovement()
 
 			elif event.type == MOUSEBUTTONDOWN:
 				pos = pygame.mouse.get_pos()
 				case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
 				if case_pos in self.units:
-					if self.units[case_pos].proprietaire == self.currentPlayer:
-						self.units[case_pos].afficherMouvementsPossibles(self.level)
+					if self.units[case_pos].owner == self.currentPlayer:
+						for case in self.units.keys():
+							self.units[case].maskPossibleMovement()
+						self.units[case_pos].displayPossibleMovement(self.level)
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()
 		self.cursor.AlignOnTopLeft(pos)
 
 	def render(self, game):
-		self.level.afficher(game.window)
+		self.level.display(game.window)
 		for key in self.units:
-			self.units[key].afficher(game.window)
+			self.units[key].display(game.window)
 		game.window.blit(self.cursor.image, (self.cursor.x, self.cursor.y))
 
 class Curseur:
