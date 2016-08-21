@@ -40,7 +40,7 @@ class Niveau:
 			self.structure = structure_niveau
 
 
-	def afficher(self, fenetre):
+	def display(self, fenetre):
 		"""Méthode permettant d'afficher le niveau en fonction
 		de la liste de structure renvoyée par generer()"""
 		#Chargement des images (seule celle d'arrivée contient de la transparence)
