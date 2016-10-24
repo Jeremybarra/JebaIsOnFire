@@ -10,6 +10,8 @@ titre_fenetre = "Fire Emblem"
 image_icone = "Images/myrmidon_droite.PNG"
 
 #Boutons du menu
+black_color = (0, 0, 0)
+
 start_game_button_x = 100
 start_game_button_y = 600
 start_game_button_witdh = 100
