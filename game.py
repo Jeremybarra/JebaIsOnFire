@@ -49,15 +49,15 @@ class TitleScreenState(GameState):
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
-			self.manage_main_buttons()
+			mouse = pygame.mouse.get_pos()
+			self.manage_main_buttons(mouse)
 			if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
 				game.continuer = False
 
 			elif event.type == KEYDOWN and event.key == K_F1:
 				game.state = PlayingState()
 
-	def manage_main_buttons(self):
-		mouse = pygame.mouse.get_pos()
+	def manage_main_buttons(self, mouse):
 		if start_game_button_x + start_game_button_witdh > mouse[0] > start_game_button_x and start_game_button_y + start_game_button_height > mouse[1] > start_game_button_y:
 			pygame.draw.rect(self.background, start_game_button_color_highlight, start_game_button_features)
 		else:
