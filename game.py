@@ -58,15 +58,25 @@ class TitleScreenState(GameState):
 				game.state = PlayingState()
 
 	def manage_main_buttons(self, mouse):
-		if start_game_button_x + start_game_button_witdh > mouse[0] > start_game_button_x and start_game_button_y + start_game_button_height > mouse[1] > start_game_button_y:
+		if self.mouse_on_start_button(mouse):
 			pygame.draw.rect(self.background, start_game_button_color_highlight, start_game_button_features)
 		else:
 			pygame.draw.rect(self.background, start_game_button_color, start_game_button_features)
 
-		if leave_game_button_x + leave_game_button_witdh > mouse[0] > leave_game_button_x and leave_game_button_y + leave_game_button_height > mouse[1] > leave_game_button_y:
+		if self.mouse_on_leave_button(mouse):
 			pygame.draw.rect(self.background, leave_game_button_color_highlight, leave_game_button_features)
 		else:
 			pygame.draw.rect(self.background, leave_game_button_color, leave_game_button_features)
+
+	def mouse_on_start_button(self, mouse):
+		if start_game_button_x + start_game_button_witdh > mouse[0] > start_game_button_x and start_game_button_y + start_game_button_height > mouse[1] > start_game_button_y:
+			return True
+		return False
+
+	def mouse_on_leave_button(self, mouse):
+		if leave_game_button_x + leave_game_button_witdh > mouse[0] > leave_game_button_x and leave_game_button_y + leave_game_button_height > mouse[1] > leave_game_button_y:
+			return True
+		return False
 
 	def update(self, game):
 		pass
