@@ -46,16 +46,27 @@ class GameState:
 class TitleScreenState(GameState):
 	def __init__(self):
 		self.background = pygame.image.load(image_accueil).convert()
-		pygame.draw.rect(self.background, start_game_button_color, start_game_button_position)
-		pygame.draw.rect(self.background, leave_game_button_color, leave_game_button_position)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
+			self.manage_main_buttons()
 			if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
 				game.continuer = False
 
 			elif event.type == KEYDOWN and event.key == K_F1:
 				game.state = PlayingState()
+
+	def manage_main_buttons(self):
+		mouse = pygame.mouse.get_pos()
+		if start_game_button_x + start_game_button_witdh > mouse[0] > start_game_button_x and start_game_button_y + start_game_button_height > mouse[1] > start_game_button_y:
+			pygame.draw.rect(self.background, start_game_button_color_highlight, start_game_button_features)
+		else:
+			pygame.draw.rect(self.background, start_game_button_color, start_game_button_features)
+
+		if leave_game_button_x + leave_game_button_witdh > mouse[0] > leave_game_button_x and leave_game_button_y + leave_game_button_height > mouse[1] > leave_game_button_y:
+			pygame.draw.rect(self.background, leave_game_button_color_highlight, leave_game_button_features)
+		else:
+			pygame.draw.rect(self.background, leave_game_button_color, leave_game_button_features)
 
 	def update(self, game):
 		pass
