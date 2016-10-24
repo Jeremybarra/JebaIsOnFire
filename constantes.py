@@ -8,10 +8,23 @@ sprite_height = 50
 #Personnalisation de la fenêtre
 titre_fenetre = "Fire Emblem"
 image_icone = "Images/myrmidon_droite.PNG"
+
+#Boutons du menu
+start_game_button_x = 100
+start_game_button_y = 600
+start_game_button_witdh = 100
+start_game_button_height = 50
 start_game_button_color = (0, 200, 0)
-start_game_button_position = (100,600,100,50)
-leave_game_button_color = (255, 0, 0)
-leave_game_button_position = (700,600,100,50)
+start_game_button_color_highlight = (0, 255, 0)
+start_game_button_features = (start_game_button_x, start_game_button_y, start_game_button_witdh, start_game_button_height)
+
+leave_game_button_x = 700
+leave_game_button_y = 600
+leave_game_button_witdh = 100
+leave_game_button_height = 50
+leave_game_button_color = (200, 0, 0)
+leave_game_button_color_highlight = (255, 0, 0)
+leave_game_button_features = (leave_game_button_x, leave_game_button_y, leave_game_button_witdh, leave_game_button_height)
 
 #Listes des images du jeu
 image_curseur = "Images/curseur2.png"
