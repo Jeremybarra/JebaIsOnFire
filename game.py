@@ -9,7 +9,6 @@ from personnages import *
 class Game:
 	def __init__(self, map_width, map_height):
 		self.map = Map(map_width, map_height)
-
 		# Initialisation (pygame, fenetre etc..)
 		self.window = pygame.display.set_mode((map_width * sprite_width, map_height * sprite_height), RESIZABLE)
 		icone = pygame.image.load(image_icone)
@@ -43,10 +42,12 @@ class GameState:
 		pass
 	def render(self, game):
 		pass
-		
+
 class TitleScreenState(GameState):
 	def __init__(self):
 		self.background = pygame.image.load(image_accueil).convert()
+		pygame.draw.rect(self.background, start_game_button_color, start_game_button_position)
+		pygame.draw.rect(self.background, leave_game_button_color, leave_game_button_position)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
