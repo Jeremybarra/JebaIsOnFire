@@ -8,6 +8,10 @@ sprite_height = 50
 #Personnalisation de la fenêtre
 titre_fenetre = "Fire Emblem"
 image_icone = "Images/myrmidon_droite.PNG"
+start_game_button_color = (0, 200, 0)
+start_game_button_position = (100,600,100,50)
+leave_game_button_color = (255, 0, 0)
+leave_game_button_position = (700,600,100,50)
 
 #Listes des images du jeu
 image_curseur = "Images/curseur2.png"
