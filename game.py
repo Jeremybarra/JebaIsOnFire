@@ -5,6 +5,7 @@ from pygame.locals import *
 from constantes import *
 from classes import *
 from personnages import *
+from buttons import *
 
 class Game:
 	def __init__(self, map_width, map_height):
@@ -48,20 +49,31 @@ class TitleScreenState(GameState):
 		self.background = pygame.image.load(image_accueil).convert()
 		self.font = pygame.font.SysFont('Arial', 25)
 
-		self.menu_buttons = MenuButton()
+		self.start_button = StartButton()
+		self.quit_button = QuitButton()
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
 			mouse = pygame.mouse.get_pos()
 			if event.type == QUIT:
 				game.continuer = False
-			self.menu_buttons.manage_mouse_pos(mouse, game, self.background, event)
+			elif event.type == pygame.MOUSEBUTTONDOWN:
+				if event.button == 1:
+					self.from_menu_to_somewhere(mouse, game)
+			self.start_button.manage_mouse_pos(mouse, game, self.background, event)
+			self.quit_button.manage_mouse_pos(mouse, game, self.background, event)
 
 	def update(self, game):
 		pass
 
 	def render(self, game):
 		game.window.blit(self.background, (0,0))
+
+	def from_menu_to_somewhere(self, mouse, game):
+		if self.start_button.mouse_on_start_button(mouse):
+			game.state = PlayingState()
+		elif self.quit_button.mouse_on_leave_button(mouse):
+			game.continuer = False
 
 class PlayingState(GameState):
 	def __init__(self):
@@ -114,55 +126,3 @@ class Curseur:
 	def AlignOnTopLeft(self, pos):
 		self.x = int(pos[0] / sprite_width) * sprite_width
 	 	self.y = int(pos[1] / sprite_height) * sprite_height
-
-class Button:
-    pass
-
-class MenuButton(Button):
-    def __init__(self):
-        self.font = pygame.font.SysFont('Arial', 25)
-
-    def manage_mouse_pos(self, mouse, game, background, event):
-        self.manage_main_buttons_colors(mouse, background)
-        self.manage_main_buttons_texts(background)
-        if event.type == pygame.MOUSEBUTTONDOWN:
-        	if event.button == 1:
-        		self.from_menu_to_somewhere(mouse, game)
-
-    def from_menu_to_somewhere(self, mouse, game):
-    	if self.mouse_on_start_button(mouse):
-    		game.state = PlayingState()
-    	elif self.mouse_on_leave_button(mouse):
-    		game.continuer = False
-
-    def manage_main_buttons_colors(self, mouse, background):
-    	if self.mouse_on_start_button(mouse):
-    		pygame.draw.rect(background, start_game_button_color_highlight, start_game_button_features)
-    	else:
-    		pygame.draw.rect(background, start_game_button_color, start_game_button_features)
-
-    	if self.mouse_on_leave_button(mouse):
-    		pygame.draw.rect(background, leave_game_button_color_highlight, leave_game_button_features)
-    	else:
-    		pygame.draw.rect(background, leave_game_button_color, leave_game_button_features)
-
-    def manage_main_buttons_texts(self, background):
-    	launch_game_text = self.font.render('Lancer', True, black_color)
-    	launch_game_text_rect = launch_game_text.get_rect()
-    	launch_game_text_rect.center = (start_game_button_x + (start_game_button_witdh / 2),start_game_button_y + (start_game_button_height / 2))
-    	background.blit(launch_game_text, launch_game_text_rect)
-
-    	leave_game_text = self.font.render('Quitter', True, black_color)
-    	leave_game_text_rect = leave_game_text.get_rect()
-    	leave_game_text_rect.center = (leave_game_button_x + (leave_game_button_witdh / 2), leave_game_button_y + (leave_game_button_height / 2))
-    	background.blit(leave_game_text, leave_game_text_rect)
-
-    def mouse_on_start_button(self, mouse):
-    	if start_game_button_x + start_game_button_witdh > mouse[0] > start_game_button_x and start_game_button_y + start_game_button_height > mouse[1] > start_game_button_y:
-    		return True
-    	return False
-
-    def mouse_on_leave_button(self, mouse):
-    	if leave_game_button_x + leave_game_button_witdh > mouse[0] > leave_game_button_x and leave_game_button_y + leave_game_button_height > mouse[1] > leave_game_button_y:
-    		return True
-    	return False
