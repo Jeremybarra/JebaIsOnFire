@@ -49,7 +49,8 @@ class TitleScreenState(GameState):
 		self.background = pygame.image.load(image_accueil).convert()
 		self.font = pygame.font.SysFont('Arial', 25)
 
-		self.menu_buttons = MenuButton()
+		self.start_button = StartButton()
+		self.quit_button = QuitButton()
 
 	def handleInput(self, game):
 		for event in pygame.event.get():
@@ -59,7 +60,8 @@ class TitleScreenState(GameState):
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1:
 					self.from_menu_to_somewhere(mouse, game)
-			self.menu_buttons.manage_mouse_pos(mouse, game, self.background, event)
+			self.start_button.manage_mouse_pos(mouse, game, self.background, event)
+			self.quit_button.manage_mouse_pos(mouse, game, self.background, event)
 
 	def update(self, game):
 		pass
@@ -68,9 +70,9 @@ class TitleScreenState(GameState):
 		game.window.blit(self.background, (0,0))
 
 	def from_menu_to_somewhere(self, mouse, game):
-		if self.menu_buttons.mouse_on_start_button(mouse):
+		if self.start_button.mouse_on_start_button(mouse):
 			game.state = PlayingState()
-		elif self.menu_buttons.mouse_on_leave_button(mouse):
+		elif self.quit_button.mouse_on_leave_button(mouse):
 			game.continuer = False
 
 class PlayingState(GameState):
