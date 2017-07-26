@@ -49,7 +49,9 @@ class Character:
 	def move(self, position):
 		self.case_x = position[0]
 		self.case_y = position[1]
+		self.maskPossibleMovement()
 		
+
 	def display(self, fenetre):
 		for key in self.mouvement_possibles:
 			if self.mouvement_possibles[key]:
