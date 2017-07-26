@@ -102,9 +102,13 @@ class PlayingState(GameState):
 				case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
 				if case_pos in self.units:
 					if self.units[case_pos].owner == self.currentPlayer:
-						for case in self.units.keys():
-							self.units[case].maskPossibleMovement()
-						self.units[case_pos].displayPossibleMovement(self.level)
+						if any(self.units[case_pos].mouvement_possibles.values()):  #Click sur une unité déjà sélectionnées
+							self.units[case_pos].maskPossibleMovement()             #On masque ses mouvements possibles
+						else:
+							for case in self.units.keys():
+								if case != case_pos:
+									self.units[case].maskPossibleMovement()
+							self.units[case_pos].displayPossibleMovement(self.level)
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()
