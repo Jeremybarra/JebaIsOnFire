@@ -102,7 +102,7 @@ class PlayingState(GameState):
 				case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
 				if event.button == 1: #Left Click
 					if case_pos in self.units:
-						if self.units[case_pos].owner == self.currentPlayer:
+						if self.units[case_pos].owner == self.currentPlayer and not self.units[case_pos].is_done:
 							if self.units[case_pos].movement_displayed:			#Click sur une unité déjà sélectionnées
 								self.units[case_pos].maskPossibleMovement()		#On masque ses mouvements possibles
 							else:
