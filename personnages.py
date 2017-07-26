@@ -31,6 +31,7 @@ class Character:
 		else:
 			self.owner = 0
 		self.mouvement_possibles = {}
+		self.movement_displayed = False
 		self.img_mouvement_possibles = pygame.image.load(image_mouvements_possibles).convert_alpha()
 
 	def displayPossibleMovement(self, niveau):
@@ -38,52 +39,17 @@ class Character:
 			for y in range(0, niveau.height):
 				if distanceCases((x, y), (self.case_x, self.case_y)) <= self.deplacement:
 					self.mouvement_possibles[(x, y)] = True
+		self.movement_displayed = True
 
 	def maskPossibleMovement(self):
 		for key in self.mouvement_possibles:
 			self.mouvement_possibles[key] = False
+		self.movement_displayed = False
 
-	def move(self, direction):
-		"""Methode permettant de déplacer le personnage"""
-
-		#Déplacement vers la droite
-		if direction == 'right':
-			#Pour ne pas dépasser l'écran
-			if self.case_x < (nombre_sprite_cote - 1):
-				#On vérifie que la case de destination n'est pas un mur
-				if self.niveau.structure[self.case_y][self.case_x+1] != 'm':
-					#Déplacement d'une case
-					self.case_x += 1
-					#Calcul de la position "réelle" en pixel
-					self.x = self.case_x * taille_sprite
-			#Image dans la bonne direction
-			self.direction = self.right
-
-		#Déplacement vers la gauche
-		if direction == 'left':
-			if self.case_x > 0:
-				if self.niveau.structure[self.case_y][self.case_x-1] != 'm':
-					self.case_x -= 1
-					self.x = self.case_x * taille_sprite
-			self.direction = self.left
-
-
-		#Déplacement vers le bas
-		if direction == 'backward':
-			if self.case_y < (nombre_ligne - 1):
-				if self.niveau.structure[self.case_y+1][self.case_x] != 'm':
-					self.case_y += 1
-					self.y = self.case_y * taille_sprite
-			self.direction = self.backward
-
-		#Déplacement vers le haut
-		if direction == 'forward':
-			if self.case_y > 0:
-				if self.niveau.structure[self.case_y-1][self.case_x] != 'm':
-					self.case_y -= 1
-					self.y = self.case_y * taille_sprite
-			self.direction = self.forward
-
+	def move(self, position):
+		self.case_x = position[0]
+		self.case_y = position[1]
+		
 	def display(self, fenetre):
 		for key in self.mouvement_possibles:
 			if self.mouvement_possibles[key]:
@@ -106,6 +72,7 @@ class Myrmidon(Character):
 		#Niveau dans lequel le personnage se trouve
 		self.niveau = niveau
 		self.deplacement = 5.0
+		self.movement_displayed = False
 
 		if owner >= 0 and owner < player_number:
 			self.owner = owner
