@@ -32,6 +32,7 @@ class Character:
 			self.owner = 0
 		self.mouvement_possibles = {}
 		self.movement_displayed = False
+		self.is_done = False
 		self.img_mouvement_possibles = pygame.image.load(image_mouvements_possibles).convert_alpha()
 
 	def displayPossibleMovement(self, niveau):
@@ -50,7 +51,6 @@ class Character:
 		self.case_x = position[0]
 		self.case_y = position[1]
 		self.maskPossibleMovement()
-		
 
 	def display(self, fenetre):
 		for key in self.mouvement_possibles:
@@ -81,4 +81,5 @@ class Myrmidon(Character):
 		else:
 			self.owner = 0
 		self.mouvement_possibles = {}
+		self.is_done = False
 		self.img_mouvement_possibles = pygame.image.load(image_mouvements_possibles).convert_alpha()
