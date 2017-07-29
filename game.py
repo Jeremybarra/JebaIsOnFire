@@ -82,9 +82,9 @@ class PlayingState(GameState):
 		self.level.generer()
 		self.currentPlayer = 0
 		self.units = {}
-		self.units[(1, 1)] = Myrmidon(1, 1, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
-		self.units[(8, 8)] = Myrmidon(8, 8, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 0)
-		self.units[(12, 12)] = Myrmidon(12, 12, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 1)
+		self.units[(1, 1)] = Myrmidon(1, 1, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 5, 0)
+		self.units[(8, 8)] = Myrmidon(8, 8, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 5, 0)
+		self.units[(12, 12)] = Myrmidon(12, 12, image_myrmidon, image_myrmidon, image_myrmidon, image_myrmidon, None, 5, 1)
 
 	def handleInput(self, game):
 		for event in pygame.event.get():

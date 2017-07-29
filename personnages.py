@@ -61,26 +61,5 @@ class Character:
 
 class Myrmidon(Character):
 	"""Classe permettant de créer un myrmidon"""
-	def __init__(self, pos_x, pos_y, right, left, forward, backward, niveau, owner):
-		#Sprites du personnage
-		self.right = pygame.image.load(right).convert_alpha()
-		self.left = pygame.image.load(left).convert_alpha()
-		self.forward = pygame.image.load(forward).convert_alpha()
-		self.backward = pygame.image.load(backward).convert_alpha()
-		#Position du personnage en cases et en pixels
-		self.case_x = pos_x
-		self.case_y = pos_x
-		#Direction par défaut
-		self.direction = self.right
-		#Niveau dans lequel le personnage se trouve
-		self.niveau = niveau
-		self.deplacement = 5.0
-		self.movement_displayed = False
-
-		if owner >= 0 and owner < player_number:
-			self.owner = owner
-		else:
-			self.owner = 0
-		self.mouvement_possibles = {}
-		self.is_done = False
-		self.img_mouvement_possibles = pygame.image.load(image_mouvements_possibles).convert_alpha()
+	def __init__(self, pos_x, pos_y, right, left, forward, backward, niveau, deplacement, owner):
+		Character.__init__(self, pos_x, pos_y, right, left, forward, backward, niveau, deplacement, owner)
