@@ -3,11 +3,12 @@ from pygame.locals import *
 from constantes import *
 
 class Button:
-    pass
+    def __init__(self):
+        self.font = pygame.font.SysFont('Arial', 25)
 
 class StartButton(Button):
     def __init__(self):
-        self.font = pygame.font.SysFont('Arial', 25)
+        Button.__init__(self)
 
     def manage_mouse_pos(self, mouse, game, background, event):
         self.manage_start_button_colors(mouse, background)
@@ -32,7 +33,7 @@ class StartButton(Button):
 
 class QuitButton(Button):
     def __init__(self):
-        self.font = pygame.font.SysFont('Arial', 25)
+        Button.__init__(self)
 
     def manage_mouse_pos(self, mouse, game, background, event):
         self.manage_quit_button_colors(mouse, background)
