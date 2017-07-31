@@ -93,31 +93,47 @@ class PlayingState(GameState):
 			elif event.type == KEYDOWN and event.key == K_ESCAPE:
 				game.state = TitleScreenState()
 			elif event.type == KEYDOWN and event.key == K_e:
-				self.currentPlayer = (self.currentPlayer + 1) % player_number
-				for key in self.units:
-					self.units[key].maskPossibleMovement()
-
+				self.end_turn()
 			elif event.type == MOUSEBUTTONDOWN:
 				pos = pygame.mouse.get_pos()
 				case_pos = (pos[0] / sprite_width, pos[1] / sprite_height)
-				if event.button == 1: #Left Click
-					if case_pos in self.units:
-						if self.units[case_pos].owner == self.currentPlayer and not self.units[case_pos].is_done:
-							if self.units[case_pos].movement_displayed:			#Click sur une unité déjà sélectionnées
-								self.units[case_pos].maskPossibleMovement()		#On masque ses mouvements possibles
-							else:
-								for case in self.units.keys():
-									if case != case_pos:
-										self.units[case].maskPossibleMovement()
-								self.units[case_pos].displayPossibleMovement(self.level)
-				elif event.button == 3: #Right Click
-					possible_cases = False
-					for unit in self.units.values():
-						if unit.movement_displayed:
-							possible_cases = unit.mouvement_possibles
-							if case_pos in possible_cases:
-								unit.move(case_pos)
+				self.manage_onclick(event, case_pos)
 
+	def end_turn(self):
+		self.currentPlayer = (self.currentPlayer + 1) % player_number
+		self.mask_all_possible_movements()
+
+	def mask_all_possible_movements(self):
+		for key in self.units:
+			self.units[key].maskPossibleMovement()
+
+	def manage_onclick(self, event, case_pos):
+		if event.button == 1: #Left Click
+			self.manage_left_click(case_pos)
+		elif event.button == 3: #Right Click
+			self.manage_right_click(case_pos)
+
+	def manage_left_click(self, case_pos):
+		if case_pos in self.units:
+			self.onclick_unit(case_pos)
+
+	def manage_right_click(self, case_pos):
+		possible_cases = False
+		for unit in self.units.values():
+			if unit.movement_displayed:
+				possible_cases = unit.mouvement_possibles
+				if case_pos in possible_cases:
+					unit.move(case_pos)
+
+	def onclick_unit(self, case_pos):
+		if self.units[case_pos].owner == self.currentPlayer and not self.units[case_pos].is_done:
+			if self.units[case_pos].movement_displayed:			#Click sur une unité déjà sélectionnée
+				self.units[case_pos].maskPossibleMovement()		#On masque ses mouvements possibles
+			else:
+				for case in self.units.keys():
+					if case != case_pos:
+						self.units[case].maskPossibleMovement()
+				self.units[case_pos].displayPossibleMovement(self.level)
 
 	def update(self, game):
 		pos = pygame.mouse.get_pos()
