@@ -102,6 +102,11 @@ class PlayingState(GameState):
 	def end_turn(self):
 		self.currentPlayer = (self.currentPlayer + 1) % player_number
 		self.mask_all_possible_movements()
+		self.set_all_units_undone()
+
+	def set_all_units_undone(self):
+		for unit in self.units.values():
+			unit.is_done = False
 
 	def mask_all_possible_movements(self):
 		for key in self.units:
@@ -119,11 +124,12 @@ class PlayingState(GameState):
 
 	def manage_right_click(self, case_pos):
 		possible_cases = False
-		for unit in self.units.values():
+		for position, unit in self.units.items():
 			if unit.movement_displayed:
 				possible_cases = unit.mouvement_possibles
 				if case_pos in possible_cases:
-					unit.move(case_pos)
+					self.units[case_pos] = self.units.pop(position) #Update de la position de l'unité
+					unit.move(case_pos)                             
 
 	def onclick_unit(self, case_pos):
 		if self.units[case_pos].owner == self.currentPlayer and not self.units[case_pos].is_done:
